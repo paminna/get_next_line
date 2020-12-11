@@ -6,11 +6,21 @@
 /*   By: paminna <paminna@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:07:19 by paminna           #+#    #+#             */
-/*   Updated: 2020/11/23 19:37:40 by paminna          ###   ########.fr       */
+/*   Updated: 2020/12/11 20:00:56 by paminna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
 
 char	*ft_strchr(const char *s, char c)
 {
@@ -26,16 +36,6 @@ char	*ft_strchr(const char *s, char c)
 	if (s[i] == c)
 		return ((char*)&s[i]);
 	return (0);
-}
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -60,3 +60,36 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new);
 }
 
+char	*ft_strlcpy(char *dst, const char *src, int dstsize)
+{
+	int i;
+
+	i = 0;
+	if (src == NULL)
+		return (0);
+	if (dstsize > 0)
+	{
+		while (src[i] != '\0' && (dstsize - i - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (dst);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*buffer;
+	size_t	i;
+
+	i = -1;
+	buffer = (char*)malloc(ft_strlen(s1) + 1);
+	if (buffer == 0)
+		return (NULL);
+	while (s1[++i])
+		buffer[i] = s1[i];
+	buffer[i] = '\0';
+	return (buffer);
+}
