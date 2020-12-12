@@ -6,11 +6,12 @@
 /*   By: paminna <paminna@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:07:19 by paminna           #+#    #+#             */
-/*   Updated: 2020/12/11 20:00:56 by paminna          ###   ########.fr       */
+/*   Updated: 2020/12/12 20:56:52 by paminna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int	ft_strlen(const char *s)
 {
@@ -27,6 +28,7 @@ char	*ft_strchr(const char *s, char c)
 	int i;
 
 	i = 0;
+
 	while (s[i])
 	{
 		if (s[i] == c)
