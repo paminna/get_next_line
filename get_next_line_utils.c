@@ -6,7 +6,7 @@
 /*   By: paminna <paminna@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:07:19 by paminna           #+#    #+#             */
-/*   Updated: 2020/12/12 20:56:52 by paminna          ###   ########.fr       */
+/*   Updated: 2020/12/14 13:52:20 by paminna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,14 @@ char	*ft_strdup(const char *s1)
 {
 	char	*buffer;
 	size_t	i;
+	int 	len;
 
 	i = -1;
-	buffer = (char*)malloc(ft_strlen(s1) + 1);
+	if (s1 == NULL)
+		len = 0;
+	else
+		len = ft_strlen(s1);
+	buffer = (char*)malloc(len + 1);
 	if (buffer == 0)
 		return (NULL);
 	while (s1[++i])

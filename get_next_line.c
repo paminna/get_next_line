@@ -6,7 +6,7 @@
 /*   By: paminna <paminna@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 18:47:16 by paminna           #+#    #+#             */
-/*   Updated: 2020/12/12 21:12:32 by paminna          ###   ########.fr       */
+/*   Updated: 2020/12/14 19:44:37 by paminna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,20 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int n_in_rem(char *str_n, char *remainder, char **line)
+int n_in_rem(char *str_n, char **remainder, char **line)
 {
 	char *tmp;
 	char *tmp_2;
 
 	*str_n++ = '\0';
-	printf("str_n1 :  %s\n", str_n);
-	tmp = remainder;
-	remainder = ft_strdup(str_n);
-	*line = ft_strjoin(*line, tmp); // записываем из остатка в line
+	tmp = *remainder;
+	tmp_2 = ft_strjoin(*line, *remainder); // записываем из остатка в line
+	*remainder = ft_strdup(str_n);
+	// free(*line);
+	*line = tmp_2;
 	free(tmp);
-	// printf("%s\n", "checked n in remainder");
+	// free(tmp_2);
 	return (1);
-}
-int malloc_line_and_remainder(char **line, char *remainder)
-{
-	if (!(*line = (char*)malloc(1)) && (remainder = (char*)malloc(1)))
-	{
-		free(remainder);
-		return (-1);
-	}
-	if (!(remainder = (char*)malloc(1)) && (*line = (char*)malloc(1)))
-	{
-		free(*line);
-		return (-1);
-	}
-	*line[0] = '\0';
-	remainder[0] = '\0';
-	return (0);
 }
 
 int get_next_line(int fd, char **line)
@@ -51,39 +36,37 @@ int get_next_line(int fd, char **line)
 	static char *remainder;  				// остаток
 	int 		r;							// результат считывания из файла
 	char 		*str_n;		 				// указатель на строку начиная с \n
-	char		*buf;		// считывание 
+	char		*buf;						// считывание 
 	char		*tmp;
 
-	// printf("%s\n", "begin");
-	if (!fd || !line || !BUFFER_SIZE || malloc_line_and_remainder(line, remainder) == -1)
+	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	// printf("%s\n", "checked errors");
+	if (*line == NULL)
+		*line = (char*)malloc(1);
+	// else
+	// 	*line = (char*)malloc(BUFFER_SIZE + 1);
 	buf = (char*)malloc(sizeof(char)*(BUFFER_SIZE + 1));
-	if (remainder != NULL && ((str_n = ft_strchr(remainder, '\n'))))
-		return(n_in_rem(str_n, remainder, line));
 	if (remainder == NULL)
 		remainder = ft_strdup("");
 	while ((r = read(fd, buf, BUFFER_SIZE)))
 	{	
-		buf[BUFFER_SIZE] = '\0';
-		// printf("%s\n", "circle");
+		buf[r] = '\0';
+		tmp = remainder;
+		remainder = ft_strjoin(remainder, buf);
+		free(tmp);
+		if ((str_n = ft_strchr(remainder, '\n')))
+			return(n_in_rem(str_n, &remainder, line));
 		if (r < 0)
 		{
 			free(buf);
 			free(remainder);
 			return (-1);
 		}
-		// printf("%s\n", "checked reading");
-		tmp = remainder;
-		remainder = ft_strjoin(remainder, buf);
-		// free(tmp);
-		// printf("%s\n", "rem + buf");
-		if ((str_n = ft_strchr(remainder, '\n')))
-		{
-			printf("str_n :  %s\n", str_n);
-			return(n_in_rem(str_n, remainder, line));
-		}
-		// printf("%s\n", "checked n");
+	}
+	if (remainder && r == 0)
+	{
+		*line = ft_strdup(remainder); 
+		free(remainder);
 	}
 	return(0);
 }
