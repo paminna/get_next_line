@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paminna <paminna@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/23 15:07:19 by paminna           #+#    #+#             */
-/*   Updated: 2020/12/19 16:13:42 by paminna          ###   ########.fr       */
+/*   Created: 2020/12/19 16:57:31 by paminna           #+#    #+#             */
+/*   Updated: 2020/12/19 17:31:53 by paminna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		ft_strlen(const char *s)
 {
@@ -38,7 +38,7 @@ char	*ft_strchr(const char *s, char c)
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, const char *s2)
 {
 	char	*new;
 	int		i;
